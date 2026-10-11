@@ -1,16 +1,24 @@
-# This is a sample Python script.
+from fastapi import FastAPI
+from app.schemas.quotation import ParseRequest, ParseResponse, ParsedItem
 
-# Press ⌃F5 to execute it or replace it with your code.
-# Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
-
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press F9 to toggle the breakpoint.
+app = FastAPI(
+    title="QuoteForge AI Service",
+    version="1.0.0"
+)
 
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
+@app.post("/api/parse", response_model=ParseResponse)
+def parse_message(request: ParseRequest):
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    item = ParsedItem(
+        product_id="100",
+        product_name="laptop",
+        quantity=5,
+        requested_discount_percent=15
+    )
+
+    return ParseResponse(
+        items=[item],
+        needs_review=False
+    )
+
