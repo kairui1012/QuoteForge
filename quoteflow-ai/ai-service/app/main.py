@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from app.schemas.quotation import ParseRequest, ParseResponse, ParsedItem
-
+from app.api.parse import router as ai_router
 app = FastAPI(
     title="QuoteForge AI Service",
     version="1.0.0"
@@ -22,3 +22,4 @@ def parse_message(request: ParseRequest):
         needs_review=False
     )
 
+app.include_router(ai_router)
